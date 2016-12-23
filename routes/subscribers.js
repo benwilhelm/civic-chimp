@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var mailchimp = require('../services/mailchimp');
+var subscribers = require('../services/subscribers');
 
 /** 
  * Subscribe user to MailChimp
@@ -10,7 +10,7 @@ router.post('/', function(req, res, next) {
   var email = req.body.email;
   var zip   = req.body.zip;
   
-  mailchimp.subscribe(email, {
+  subscribers.subscribe(email, {
     ZIP: zip
   }, function(err, r){
     if (err) return res.error(err)
