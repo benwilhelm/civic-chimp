@@ -11,8 +11,13 @@ const MC_URL_BASE   = `https://${MC_DATACENTER}.api.mailchimp.com/3.0`;
 
 module.exports = {
   
+  apiUrlBase: function() {
+    return MC_URL_BASE;
+  },
+  
   subscribe: function(email, mergeFields, done) {
     var url = `${MC_URL_BASE}/lists/${MC_LIST_ID}/members`
+    console.log(url)
     request.post(url, {
       body: {
         email_address: email,

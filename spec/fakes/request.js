@@ -1,3 +1,6 @@
+var crypto = require('crypto');
+var _ = require("lodash");
+
 module.exports = {
   
   google: {
@@ -161,6 +164,26 @@ module.exports = {
            ]
           }
         `
+      })
+    }
+  },
+  
+  mailchimp: {
+    
+    /**
+     * represents 200 response from post to create new mailchimp list member
+     */
+    postMember200: function(url, reqBody, done) {
+      email = reqBody.body.email_address.toLowerCase();
+      var md5email = crypto.createHash('md5')
+                           .update(email)
+                           .digest('hex')
+                           .toString();
+      
+      var body = reqBody.body
+      body.id = md5email
+      return done(null, {
+        body: body
       })
     }
   }
