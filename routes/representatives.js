@@ -1,23 +1,22 @@
 var express = require("express");
 var router = express.Router();
 var _ = require('lodash');
-var respService = require("../services/response");
 var representatives = require("../services/representatives");
 
-router.get("/", function(req, res){
+router.get("/", function(req, res, next){
   var validatedQuery;
   try {
     validatedQuery = validateRepQuery(req.query);
   } catch (e) {
-    return respService.fiveHundred(res, e)
+    return next(e)
   }
 
   if (validatedQuery.error) {
-    return respService.fourHundred(res, validatedQuery.error)
+    return next(validatedQuery.error);
   }
   
   representatives.locate(validatedQuery, function(err, located){
-    if (err) return respService.fiveHundred(res, err);
+    if (err) return next(err);
     res.json(located);
   })
 })
@@ -37,6 +36,7 @@ function validateRepQuery(query) {
   })
   
   if (!_.isEmpty(errors)) {
+    errors.status = 400;
     return { error: errors }
   }
   

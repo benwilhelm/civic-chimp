@@ -185,6 +185,17 @@ module.exports = {
       return done(null, {
         body: body
       })
+    },
+    
+    postMemberAlreadyExists: function(url, reqBody, done) {
+      email = reqBody.body.email_address.toLowerCase();
+      return done(null, {
+        "type": "http://developer.mailchimp.com/documentation/mailchimp/guides/error-glossary/",
+        "title": "Member Exists",
+        "status": 400,
+        "detail": `${email} is already a list member. Use PUT to insert or update list members.`,
+        "instance": ""
+      })
     }
   }
 }
