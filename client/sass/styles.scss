@@ -1,0 +1,7 @@
+.foo {
+  background-color: red;
+  
+  &:hover {
+    background-color: green;
+  }
+}

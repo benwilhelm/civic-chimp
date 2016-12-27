@@ -1,0 +1,117 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Half Slider - Start Bootstrap Template
+    // Bootstrap Core CSS
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='css/half-slider.css', rel='stylesheet')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //
+    <!--[if lt IE 9]>
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    <![endif]-->
+    //
+  body
+    // Navigation
+    //- nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+    //-   .container
+    //-     // Brand and toggle get grouped for better mobile display
+    //-     .navbar-header
+    //-       button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+    //-         span.sr-only Toggle navigation
+    //-         span.icon-bar
+    //-         span.icon-bar
+    //-         span.icon-bar
+    //-       a.navbar-brand(href='#') Start Bootstrap
+    //-     // Collect the nav links, forms, and other content for toggling
+    //-     #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    //-       ul.nav.navbar-nav
+    //-         li
+    //-           a(href='#') About
+    //-         li
+    //-           a(href='#') Services
+    //-         li
+    //-           a(href='#') Contact
+    //-     // /.navbar-collapse
+    //-   // /.container
+    //- // Half Page Image Background Carousel Header
+    header#myCarousel.carousel.slide
+      // Indicators
+      ol.carousel-indicators
+        li.active(data-target='#myCarousel', data-slide-to='0')
+        li(data-target='#myCarousel', data-slide-to='1')
+        li(data-target='#myCarousel', data-slide-to='2')
+      // Wrapper for Slides
+      .carousel-inner
+        .item.active
+          // Set the first background image using inline CSS below.
+          .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide One');")
+          .carousel-caption
+            h2 Caption 1
+        .item
+          // Set the second background image using inline CSS below.
+          .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');")
+          .carousel-caption
+            h2 Caption 2
+        .item
+          // Set the third background image using inline CSS below.
+          .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');")
+          .carousel-caption
+            h2 Caption 3
+      // Controls
+      a.left.carousel-control(href='#myCarousel', data-slide='prev')
+        span.icon-prev
+      a.right.carousel-control(href='#myCarousel', data-slide='next')
+        span.icon-next
+    // Page Content
+    .container
+      .row
+        .col-lg-8.col-md-7
+          h1 Engage your representatives!
+
+          p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+          p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        
+        .col-lg-4.col-md-5.signup-form
+          h2 Locate Your Reps!
+          form 
+            .form-group
+              label Street Address 
+              input.form-control 
+
+            .row
+              .form-group.col-xs-8
+                label City
+                input.form-control  
+              
+              .form-group.col-xs-4
+                label ZIP Code 
+                input.form-control.foo
+            
+            input.form-control.btn-primary.block(type='submit', value="Find 'em!'")
+      hr
+      // Footer
+      footer
+        .row
+          .col-lg-12
+            p Copyright © Your Website 2014
+        // /.row
+    // /.container
+    // jQuery
+    script(src='js/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='js/bootstrap.min.js')
+    // Script to Activate the Carousel
+    script.
+      $('.carousel').carousel({
+      interval: 5000 //changes the speed
+      })
