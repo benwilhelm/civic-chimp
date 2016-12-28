@@ -5,6 +5,7 @@ import request from "request";
 
 import SignupForm from "./components/signupform";
 import RepLocator from "./components/replocator";
+import ThankYou   from "./components/thank-you";
 import constants from "./lib/constants";
 
 class SignupWidget extends React.Component {
@@ -27,7 +28,9 @@ class SignupWidget extends React.Component {
         zip: ""
       },
       located: false,
-      requestPending: false
+      requestPending: false,
+      subscribed: false,
+      errorMessage: ""
     }
   }
   
@@ -53,15 +56,17 @@ class SignupWidget extends React.Component {
   _handleRepLocatorSubmit(e) {
     e.preventDefault();
     var self = this;
-    this.setState({requestPending: true})
+    this.setState({requestPending: true, errorMessage: "" })
     var queryString = this.getLocationQueryString(this.state.location);
     var url = `${constants.baseUrl}/representatives/?${queryString}`
     request.get(url, function(err, res){
       self.setState({requestPending: false})
-      if (res.statusCode === 200) {
-        var reps = JSON.parse(res.body);
-        return self.setRepresentatives(reps)
+      var resBody = JSON.parse(res.body)
+      if (res.statusCode !== 200) {
+        return self.setState({ errorMessage: "Could not locate your representatives. Please double check and try again." })
       }
+
+      return self.setRepresentatives(resBody)
     })
   }
   
@@ -72,7 +77,7 @@ class SignupWidget extends React.Component {
   _handleSubscribeSubmit(e) {
     e.preventDefault();
     var self = this;
-    self.setState({ requestPending: true })
+    self.setState({ requestPending: true, errorMessage: "" })
     var url = `${constants.baseUrl}/subscribers/`
     var location = self.state.location;
     var reps = self.state.reps;
@@ -94,7 +99,24 @@ class SignupWidget extends React.Component {
       }
     }, function(err, res){
       self.setState({ requestPending: false })
-      console.log(err, res)
+      // var resBody = JSON.parse(res.body)
+      // console.log(resBody)
+      if (res.statusCode !== 200) {
+        var errorMessage = "There was a problem.";
+        console.log(res.body)
+        switch (res.body.error.STATUS_CODE) {
+          case "MEMBER_EXISTS": 
+            errorMessage = "That email already exists in our system.";
+            break;
+          
+          case "INVALID_RESOURCE":
+            errorMessage = "That does not appear to be a valid email address";
+            break;
+        }
+        return self.setState({ errorMessage: errorMessage })
+      }
+      
+      self.setState({ subscribed: true })
     })
   }
   
@@ -123,14 +145,21 @@ class SignupWidget extends React.Component {
   }
   
   render() {
+    if (this.state.subscribed) {
+      return <ThankYou />
+    }
+    
     if (this.state.located) {
       return <SignupForm reps={this.state.reps} 
                          email={this.state.email}
+                         errorMessage={this.state.errorMessage}
                          handleChange={this._handleSubscribeChange}
                          handleSubmit={this._handleSubscribeSubmit} />
     }
+    
     return <RepLocator handleChange={this._handleRepLocatorChange}
                        handleSubmit={this._handleRepLocatorSubmit}
+                       errorMessage={this.state.errorMessage}
                        location={this.state.location} 
                        requestPending={this.state.requestPending} />
   }

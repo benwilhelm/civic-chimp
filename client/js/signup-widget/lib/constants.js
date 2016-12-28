@@ -15,7 +15,7 @@ switch (process.env.NODE_ENV) {
   case 'production': 
     throw new Error("No baseUrl defined for production");
     constants.baseUrl = ''
-  
+    break;
 }
 
 

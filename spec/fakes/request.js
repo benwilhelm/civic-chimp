@@ -9,6 +9,7 @@ module.exports = {
      */
     locateRep200: function(url, done){
       return done(null, {
+        statusCode: 200,
         body: `
           {
            "kind": "civicinfo#representativeInfoResponse",
@@ -169,6 +170,7 @@ module.exports = {
     
     locateRep400: function(url, done) {
       return done(null, {
+        statusCode: 400,
         body: `
           { "error": { 
             "errors": 
@@ -198,6 +200,7 @@ module.exports = {
       var body = reqBody.body
       body.id = md5email
       return done(null, {
+        statusCode: 200,
         body: body
       })
     },
@@ -205,11 +208,28 @@ module.exports = {
     postMemberAlreadyExists: function(url, reqBody, done) {
       email = reqBody.body.email_address.toLowerCase();
       return done(null, {
-        "type": "http://developer.mailchimp.com/documentation/mailchimp/guides/error-glossary/",
-        "title": "Member Exists",
-        "status": 400,
-        "detail": `${email} is already a list member. Use PUT to insert or update list members.`,
-        "instance": ""
+        statusCode: 400,
+        body: {
+          "type": "http://developer.mailchimp.com/documentation/mailchimp/guides/error-glossary/",
+          "title": "Member Exists",
+          "status": 400,
+          "detail": `${email} is already a list member. Use PUT to insert or update list members.`,
+          "instance": ""
+        }
+      })
+    },
+    
+    postMemberBadEmail: function(url, reqBody, done) {
+      email = reqBody.body.email_address.toLowerCase();
+      return done(null, {
+        statusCode: 400,
+        body: {
+          type: 'http://developer.mailchimp.com/documentation/mailchimp/guides/error-glossary/',
+          title: 'Invalid Resource',
+          status: 400,
+          detail: 'The domain portion of the email address is invalid (the portion after the @: bar)',
+          instance: '' 
+        }
       })
     }
   }

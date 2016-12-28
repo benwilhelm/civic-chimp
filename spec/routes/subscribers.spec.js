@@ -32,7 +32,7 @@ describe("/subscribers", function(){
       })
     })
     
-    it("should return 409 if email already exists", function(done){
+    it("should return 400 if email already exists", function(done){
       spyOn(request, 'post').and.callFake(fakes.mailchimp.postMemberAlreadyExists)
       supertest(app)
       .post("/subscribers")
@@ -41,6 +41,19 @@ describe("/subscribers", function(){
         assert.ifError(err);
         expect(res.status).toEqual(400)
         expect(res.body.error.STATUS_CODE).toEqual("MEMBER_EXISTS")
+        done();
+      })
+    })
+
+    it("should return 400 if email is malformed", function(done){
+      spyOn(request, 'post').and.callFake(fakes.mailchimp.postMemberBadEmail)
+      supertest(app)
+      .post("/subscribers")
+      .send({ email: "test@example"})
+      .end(function(err, res){
+        assert.ifError(err);
+        expect(res.status).toEqual(400)
+        expect(res.body.error.STATUS_CODE).toEqual("INVALID_RESOURCE")
         done();
       })
     })

@@ -49,22 +49,22 @@ function validateSubscriberQuery(query) {
 }
 
 function validateSubscribeResponse(resp) {
-  if (!resp.status || resp.status === 200) {
+  if (resp.statusCode === 200) {
     return { 
-      status: 200,
+      status: resp.statusCode,
       body: {
-          email: resp.email_address 
+          email: resp.body.email_address 
       }
     };
   } 
   
-  var statusCode = resp.title.toUpperCase().replace(/ /g, "_");
+  var statusCode = resp.body.title.toUpperCase().replace(/ /g, "_");
   return {
-    status: resp.status,
+    status: resp.statusCode,
     body: {
       error: {
         STATUS_CODE: statusCode,
-        message: resp.title
+        message: resp.body.title
       }
     }
   }

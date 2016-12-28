@@ -1,4 +1,5 @@
 import React from 'react'
+import ErrorMessage from "./error-message";
 
 class RepLocator extends React.Component {
   
@@ -13,6 +14,8 @@ class RepLocator extends React.Component {
     return (
       <form onSubmit={this.props.handleSubmit}>
         <h2>Find Your Reps</h2>
+        
+        <ErrorMessage message={this.props.errorMessage} />
         <div className="form-group">
           <label htmlFor="street">Street Address</label>
           <input type="text" 

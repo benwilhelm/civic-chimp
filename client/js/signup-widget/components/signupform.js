@@ -1,5 +1,6 @@
 import React from "react";
 import Representative from "./representative";
+import ErrorMessage from "./error-message";
 
 class SignupForm extends React.Component {
   
@@ -8,9 +9,11 @@ class SignupForm extends React.Component {
   }
   
   render() {
+    console.log(this.props.errorMessage);
     return (
       <form onSubmit={this.props.handleSubmit}>
         <h2>Subscribe</h2>
+        <ErrorMessage message={this.props.errorMessage} />
         <div className="row">
           <div className="col-xs-8">
             <input type="email" 
