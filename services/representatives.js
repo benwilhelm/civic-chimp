@@ -11,11 +11,30 @@ var request = require("request");
  * @callback {requestCallback} done - The callback that handles the response
  */
 function locate(address, done) {
-  var locatorUrl = getLocatorUrl(address)
+
+  var validAddress;
+  try {
+    validAddress = validateAddress(address);
+  } catch (e) {
+    return done(e)
+  }
+
+  if (validAddress.error) {
+    return done(validAddress.error);
+  }
+  
+
+  var locatorUrl = getLocatorUrl(validAddress)
   request.get(locatorUrl, function(err, res){
     if (err) return done(err);
     try {
-      var repInfo = parseRepInfo(JSON.parse(res.body));
+      var body = JSON.parse(res.body);
+      if (body.error) {
+        body.error.status = body.error.status || body.error.code
+        return done(body.error)
+      }
+
+      var repInfo = parseRepInfo(body);
       return done(null, repInfo)
     } catch(e) {
       return done(e);
@@ -122,6 +141,29 @@ function parseCongressInfo(office, fullInfo) {
     }
   }
 }
+
+
+function validateAddress(query) {
+  var params = _.pick(query, ['street', 'city', 'state', 'zip']);
+  var errors = {};
+  (['street', 'city', 'state', 'zip']).forEach(function(prop){
+    if (!params[prop]) {
+      errors[prop] = errors[prop] || [];
+      errors[prop].push({
+        code: 'MISSING_PARAM',
+        message: `${prop} is a required query parameter`,
+      })
+    }
+  })
+  
+  if (!_.isEmpty(errors)) {
+    errors.status = 400;
+    return { error: errors }
+  }
+  
+  return params;
+}
+
 
 
 module.exports = {

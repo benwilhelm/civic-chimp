@@ -165,6 +165,21 @@ module.exports = {
           }
         `
       })
+    },
+    
+    locateRep400: function(url, done) {
+      return done(null, {
+        body: `
+          { "error": { 
+            "errors": 
+             [ { "domain": "global",
+                 "reason": "parseError",
+                 "message": "Failed to parse address" } ],
+            "code": 400,
+            "message": "Failed to parse address"
+          }
+        }`
+      })
     }
   },
   

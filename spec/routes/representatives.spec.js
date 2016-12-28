@@ -50,5 +50,16 @@ describe("/representatives", function(){
         done();
       })
     })
+    
+    it('should return 400 if Google return 400', function(done){
+      spyOn(request, 'get').and.callFake(fakes.google.locateRep400)
+      supertest(app)
+      .get("/representatives?street=800+N+Damen&city=Chicago&state=IL&zip=60622")
+      .end(function(err, res){
+        expect(res.status).toEqual(400)
+        expect(res.body.error.message).toEqual("Failed to parse address");
+        done();
+      })
+    })
   })
 })
