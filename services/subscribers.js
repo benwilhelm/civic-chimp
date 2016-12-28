@@ -40,6 +40,7 @@ function getDataCenterFromApiKey(apiKey) {
 }
 
 function normalizeMergeFields(mergeFields) {
+  if (!mergeFields) return {};
   mergeFields.US_REP_PHO = normalizePhone(mergeFields.US_REP_PHO);
   mergeFields.US_SEN1_PH = normalizePhone(mergeFields.US_SEN1_PH);
   mergeFields.US_SEN2_PH = normalizePhone(mergeFields.US_SEN2_PH);
