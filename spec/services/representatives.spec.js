@@ -11,7 +11,7 @@ describe("representatives service", function(){
     it("should make request to google API", function(done){
       spyOn(request, 'get').and.callFake(fakes.google.locateRep200)
       representatives.locate({
-        street1: "800 N. Damen Ave.",
+        street: "800 N. Damen Ave.",
         street2: "#2500",
         city: "Chicago",
         state: "IL",

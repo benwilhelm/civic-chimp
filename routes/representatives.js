@@ -23,9 +23,9 @@ router.get("/", function(req, res, next){
 
 
 function validateRepQuery(query) {
-  var params = _.pick(query, ['street1', 'street2', 'city', 'state', 'zip']);
+  var params = _.pick(query, ['street', 'city', 'state', 'zip']);
   var errors = {};
-  (['street1', 'city', 'state', 'zip']).forEach(function(prop){
+  (['street', 'city', 'state', 'zip']).forEach(function(prop){
     if (!params[prop]) {
       errors[prop] = errors[prop] || [];
       errors[prop].push({

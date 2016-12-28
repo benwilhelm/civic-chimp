@@ -7,7 +7,7 @@ var request = require("request");
  * Takes hash of address fields and makes a request to the Google 
  * Civic Data API to retrieve corresponding legislator info.
  * @param {object} address - requested address. 
- *   String fields street1, street2, city, state, zip
+ *   String fields street, street2, city, state, zip
  * @callback {requestCallback} done - The callback that handles the response
  */
 function locate(address, done) {
@@ -28,7 +28,7 @@ function locate(address, done) {
  * Takes hash of address fields and constructs request URL with them
  * to locate representatives 
  * @param {object} address - requested address. 
- *   String fields street1, street2, city, state, zip
+ *   String fields street, street2, city, state, zip
  * @returns {string} - Google Civic Data API request URL
  */
 function getLocatorUrl(address) {
@@ -48,7 +48,7 @@ function getLocatorUrl(address) {
 /**
  * Processes address parameters and returns url-encoded address string 
  * @param {object} address - address object.
- *   String fields street1, street2, city, state, zip
+ *   String fields street, street2, city, state, zip
  * @returns {string} - URL Encoded address
  */
 function encodeAddressObject(address) {
@@ -57,7 +57,7 @@ function encodeAddressObject(address) {
   }
   
   var addressString = [
-    address.street1,
+    address.street,
     address.street2,
     address.city,
     address.state,

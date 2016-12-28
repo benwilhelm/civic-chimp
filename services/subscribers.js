@@ -22,7 +22,7 @@ module.exports = {
         email_address: email,
         status: 'subscribed',
         email_type: 'html',
-        merge_fields: mergeFields
+        merge_fields: normalizeMergeFields(mergeFields)
       },
       json: true,
       auth: {
@@ -38,3 +38,27 @@ function getDataCenterFromApiKey(apiKey) {
   var a = apiKey.split('-');
   return a[a.length - 1];
 }
+
+function normalizeMergeFields(mergeFields) {
+  mergeFields.US_REP_PHO = normalizePhone(mergeFields.US_REP_PHO);
+  mergeFields.US_SEN1_PH = normalizePhone(mergeFields.US_SEN1_PH);
+  mergeFields.US_SEN2_PH = normalizePhone(mergeFields.US_SEN2_PH);
+  return mergeFields;
+}
+
+function normalizePhone(ph) {
+  if (!ph) return "";
+  
+  ph = ph.replace(/[^\d]/g, '');
+  if (ph[0] === '1') {
+    ph = ph.substr(1)
+  }
+  
+  if (ph.length != 10) return "";
+  
+  var a = ph.substr(0, 3);
+  var b = ph.substr(3, 3);
+  var c = ph.substr(6, 4);
+  
+  return `${a}-${b}-${c}`
+} 

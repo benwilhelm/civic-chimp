@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
 
 
 function validateSubscriberQuery(query) {
-  var params = _.pick(query, ['email']);
+  var params = _.pick(query, ['email', 'mergeFields']);
   var errors = {};
   (['email']).forEach(function(prop){
     if (!params[prop]) {

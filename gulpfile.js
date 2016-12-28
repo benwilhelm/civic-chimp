@@ -2,7 +2,13 @@ var gulp = require('gulp');
 var clean = require("gulp-clean");
 var pug  = require('gulp-pug');
 var sass = require('gulp-sass');
+var uglify = require("gulp-uglify");
+var rename = require("gulp-rename");
+var livereload = require("gulp-livereload");
 
+var browserify = require("browserify");
+var babelify   = require('babelify');
+var source     = require('vinyl-source-stream');
 
 const client = './client'
 const publicDir = "./public"
@@ -49,8 +55,33 @@ gulp.task('sass', function buildSass(){
   
 })
 
+gulp.task('buildSignupWidget', function(){
+  var widget = browserify({
+    entries: `${client}/js/signup-widget/main.js`,
+    transform: [[babelify, {presets: ['es2015', 'react']}]]
+  })
+  
+  widget.bundle()
+  .pipe(source('widget.js'))
+  .pipe(gulp.dest(`${publicDir}/js`))
+  .pipe(livereload());
+})
+
+// gulp.task('uglifyWidget', [ 'buildSignupWidget' ], function(){
+//   gulp.src(`${publicDir}/js/widget.js`)
+//   .pipe(rename('widget.min.js'))
+//   .pipe(uglify())
+//   .pipe(gulp.dest(`${publicDir}/js`))
+// })
+
+
 gulp.task('buildClient', [
   'copyThemeResources',
   'sass',
   'html'
 ])
+
+gulp.task('watchWidget', function(){
+  livereload.listen();
+  gulp.watch('client/js/signup-widget/**/*', ['buildSignupWidget'])
+})

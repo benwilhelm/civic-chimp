@@ -8,13 +8,13 @@ describe("/representatives", function(){
   
   describe("/ GET", function(){
     
-    it("should require street1, city, state, zip query params", function(done){
+    it("should require street, city, state, zip query params", function(done){
       supertest(app)
       .get("/representatives")
       .end(function(err, res){
         assert.ifError(err);
         expect(res.status).toEqual(400)
-        expect(res.body.error.street1[0].code).toEqual('MISSING_PARAM');
+        expect(res.body.error.street[0].code).toEqual('MISSING_PARAM');
         expect(res.body.error.city[0].code).toEqual('MISSING_PARAM');
         expect(res.body.error.state[0].code).toEqual('MISSING_PARAM');
         expect(res.body.error.zip[0].code).toEqual('MISSING_PARAM');
@@ -25,7 +25,7 @@ describe("/representatives", function(){
     it("should return normalized representative data from service", function(done){
       spyOn(request, 'get').and.callFake(fakes.google.locateRep200)
       supertest(app)
-      .get("/representatives?street1=800+N+Damen&city=Chicago&state=IL&zip=60622")
+      .get("/representatives?street=800+N+Damen&city=Chicago&state=IL&zip=60622")
       .end(function(err, res){
         assert.ifError(err);
         var body = res.body;
