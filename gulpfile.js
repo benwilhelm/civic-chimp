@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 var livereload = require("gulp-livereload");
+var sequence = require("run-sequence");
 
 var browserify = require("browserify");
 var babelify   = require('babelify');
@@ -44,7 +45,14 @@ gulp.task('copyThemeJs', function copyThemeJs(){
 
 
 
-gulp.task('copyThemeResources', [ 'copyThemeCss', 'copyThemeJs' ])
+
+
+gulp.task('copyThemeResources', [ 'copyThemeCss', 'copyThemeJs' ], function(){
+  return gulp.src([
+    `${client}/*.png`
+  ])
+  .pipe(gulp.dest(publicDir));
+})
 
 gulp.task('sass', function buildSass(){
   return gulp.src(
@@ -67,19 +75,20 @@ gulp.task('buildSignupWidget', function(){
   .pipe(livereload());
 })
 
-// gulp.task('uglifyWidget', [ 'buildSignupWidget' ], function(){
-//   gulp.src(`${publicDir}/js/widget.js`)
-//   .pipe(rename('widget.min.js'))
-//   .pipe(uglify())
-//   .pipe(gulp.dest(`${publicDir}/js`))
-// })
+gulp.task('uglifyWidget', [ 'buildSignupWidget' ], function(){
+  gulp.src(`${publicDir}/js/widget.js`)
+  .pipe(uglify())
+  .pipe(rename('widget.min.js'))
+  .pipe(gulp.dest(`${publicDir}/js`))
+})
 
 
-gulp.task('buildClient', [
-  'copyThemeResources',
-  'sass',
-  'html'
-])
+gulp.task('build', function(done){
+  sequence('clean', [
+    'copyThemeResources',
+    'html'
+  ], 'buildSignupWidget')
+})
 
 gulp.task('watchWidget', function(){
   livereload.listen();

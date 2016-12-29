@@ -2,36 +2,43 @@
   "name": "civic-chimp",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "6.9.1"
+  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "postinstall": "gulp build"
   },
   "dependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
     "babelify": "^7.3.0",
     "body-parser": "~1.15.2",
     "browserify": "^13.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "envify": "^4.0.0",
     "express": "~4.14.0",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-envify": "^1.0.0",
+    "gulp-pug": "^3.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
     "lodash": "^4.17.2",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.9.8",
     "pug": "~2.0.0-beta6",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "run-sequence": "^1.2.2",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "flux": "^3.1.2",
-    "gulp-clean": "^0.3.2",
     "gulp-livereload": "^3.8.1",
-    "gulp-pug": "^3.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.0.0",
     "gulp-series": "^1.0.2",
-    "gulp-uglify": "^2.0.0",
     "jasmine": "^2.5.2",
     "supertest": "^2.0.1",
     "vinyl-source-stream": "^1.1.0"
