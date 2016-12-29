@@ -13,8 +13,7 @@ const constants = {
 // These are the environmental overrides
 switch (process.env.NODE_ENV) {
   case 'production': 
-    throw new Error("No baseUrl defined for production");
-    constants.baseUrl = ''
+    constants.baseUrl = 'https://civic-chimp.herokuapp.com'
     break;
 }
 
