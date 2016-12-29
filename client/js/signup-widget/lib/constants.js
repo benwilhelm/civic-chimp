@@ -5,7 +5,7 @@
 
 
 // These are the defaults.
-const constants = {
+var constants = {
   baseUrl: "http://localhost:3000"
 }
 

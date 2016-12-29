@@ -4,6 +4,7 @@ var pug  = require('gulp-pug');
 var sass = require('gulp-sass');
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
+var envify = require("envify/custom");
 var sequence = require("run-sequence");
 
 var browserify = require("browserify");
@@ -67,6 +68,10 @@ gulp.task('buildSignupWidget', function(){
     entries: `${client}/js/signup-widget/main.js`,
     transform: [[babelify, {presets: ['es2015', 'react']}]]
   })
+  
+  widget.transform(envify({
+    NODE_ENV: process.env.NODE_ENV || 'development'
+  }));
   
   widget.bundle()
   .pipe(source('widget.js'))
