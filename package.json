@@ -34,13 +34,13 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "run-sequence": "^1.2.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "gulp-livereload": "^3.8.1",
     "gulp-series": "^1.0.2",
     "jasmine": "^2.5.2",
-    "supertest": "^2.0.1",
-    "vinyl-source-stream": "^1.1.0"
+    "supertest": "^2.0.1"
   }
 }
