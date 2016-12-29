@@ -1,7 +1,10 @@
 const API_KEY = process.env.LEGISLATOR_API_KEY
+var assert = require('assert')
 var _ = require("lodash");
 var request = require("request");
 
+
+assert(API_KEY, "No Legislator API Key defined (LEGISLATOR_API_KEY)")
 
 /**
  * Takes hash of address fields and makes a request to the Google 
