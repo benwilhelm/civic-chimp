@@ -9,7 +9,6 @@ class SignupForm extends React.Component {
   }
   
   render() {
-    console.log(this.props.errorMessage);
     return (
       <form onSubmit={this.props.handleSubmit}>
         <h2>Subscribe</h2>

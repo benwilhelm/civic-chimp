@@ -99,11 +99,8 @@ class SignupWidget extends React.Component {
       }
     }, function(err, res){
       self.setState({ requestPending: false })
-      // var resBody = JSON.parse(res.body)
-      // console.log(resBody)
       if (res.statusCode !== 200) {
         var errorMessage = "There was a problem.";
-        console.log(res.body)
         switch (res.body.error.STATUS_CODE) {
           case "MEMBER_EXISTS": 
             errorMessage = "That email already exists in our system.";
