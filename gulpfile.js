@@ -4,7 +4,6 @@ var pug  = require('gulp-pug');
 var sass = require('gulp-sass');
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
-var livereload = require("gulp-livereload");
 var sequence = require("run-sequence");
 
 var browserify = require("browserify");
@@ -72,7 +71,6 @@ gulp.task('buildSignupWidget', function(){
   widget.bundle()
   .pipe(source('widget.js'))
   .pipe(gulp.dest(`${publicDir}/js`))
-  .pipe(livereload());
 })
 
 gulp.task('uglifyWidget', [ 'buildSignupWidget' ], function(){
